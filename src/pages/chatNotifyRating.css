@@ -1,0 +1,984 @@
+/* InGo — Chat, Notifications, Rate experience */
+/* Chat */
+.ingChat {
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #fff6ee 0%, #f7f8fa 32%, #f4f6f8 100%);
+  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+.ingChat__back {
+  position: absolute;
+  left: 0.15rem;
+  top: 50%;
+  transform: translateY(calc(-50% + env(safe-area-inset-top, 0) * 0.12));
+  width: 2.6rem;
+  height: 2.6rem;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 2;
+}
+.ingChat__call {
+  position: absolute;
+  right: 0.15rem;
+  top: 50%;
+  transform: translateY(calc(-50% + env(safe-area-inset-top, 0) * 0.12));
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F18631;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 2;
+  text-decoration: none;
+}
+.ingChat__headC {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2.5rem 0.15rem 2.5rem;
+  min-height: 1.1rem;
+}
+.ingChat__ava {
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #b0e4bc, #F18631 120%);
+  margin: 0 auto 0.1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+.ingChat__name {
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ingChat__sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  color: #6b6b6b;
+  margin: 0.05rem 0 0 0;
+}
+.ingChat__dotO {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #F18631;
+  flex-shrink: 0;
+}
+.ingChat__subO {
+  color: #F18631;
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+.ingChat__head {
+  position: relative;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #eceff3;
+  padding: 0.35rem 0.3rem
+    0.45rem
+    0.3rem;
+  padding-top: max(0.2rem, env(safe-area-inset-top, 0));
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(31, 41, 55, 0.06);
+}
+
+.ingChat__msgs {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.75rem 0.75rem 0.55rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.52rem;
+}
+.ingChat__row {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+.ingChat__row--L {
+  justify-content: flex-start;
+}
+.ingChat__row--R {
+  justify-content: flex-end;
+}
+.ingChat__avaS {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #d0d0d0;
+  flex-shrink: 0;
+}
+.ingChat__bubbleR {
+  max-width: min(78%, 28rem);
+  background: #4f5561;
+  color: #fff;
+  border-radius: 14px 14px 14px 6px;
+  padding: 0.52rem 0.72rem 0.42rem 0.72rem;
+  font-size: 0.89rem;
+  line-height: 1.4;
+  text-align: left;
+  box-shadow: 0 8px 18px rgba(55, 65, 81, 0.16);
+}
+.ingChat__bubbleS {
+  max-width: min(78%, 28rem);
+  background: linear-gradient(145deg, #F18631, #de6f17);
+  color: #fff;
+  border-radius: 14px 14px 6px 14px;
+  padding: 0.52rem 0.72rem 0.35rem 0.72rem;
+  font-size: 0.89rem;
+  line-height: 1.4;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 10px 20px rgba(241, 134, 49, 0.3);
+}
+.ingChat__metaL {
+  margin-left: 1.9rem;
+  display: block;
+  font-size: 0.62rem;
+  color: #768090;
+  margin-top: 0.15rem;
+}
+.ingChat__metaR {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  font-size: 0.62rem;
+  color: #7a8597;
+  margin-top: 0.2rem;
+}
+.ingChat__tick {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 0.5rem;
+  line-height: 0;
+  opacity: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+.ingChat__sys {
+  align-self: center;
+  text-align: center;
+  max-width: 90%;
+  margin: 0.18rem 0 0.18rem 0;
+  padding: 0.36rem 0.76rem;
+  border-radius: 50rem;
+  background: rgba(236, 240, 245, 0.92);
+  color: #4d596c;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.ingChat__chips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem 0.45rem 0.5rem;
+  background: #fff;
+  border-top: 1px solid #eee;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+.ingChat__chips::-webkit-scrollbar {
+  display: none;
+}
+.ingChat__chip {
+  flex: 0 0 auto;
+  border: 1.5px solid #e0e0e0;
+  background: #f5f5f5;
+  color: #3a3a3a;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 50rem;
+  padding: 0.35rem 0.6rem;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ingChat__inBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.55rem
+    max(0.4rem, env(safe-area-inset-bottom, 0) * 0.2 + 0.35rem) 0.45rem
+    0.55rem;
+  background: rgba(255, 255, 255, 0.94);
+  border-top: 1px solid #e9edf3;
+  flex-shrink: 0;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 -10px 24px rgba(17, 24, 39, 0.08);
+}
+.ingChat__attach {
+  width: 2.15rem;
+  height: 2.15rem;
+  border: none;
+  background: none;
+  color: #7a7a7a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.ingChat__in {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 1px solid #e3e8ef;
+  border-radius: 14px;
+  padding: 0.55rem 0.72rem;
+  font: inherit;
+  font-size: 0.92rem;
+  color: #1a1a1a;
+  background: #fff;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.ingChat__in:focus {
+  border-color: rgba(241, 134, 49, 0.75);
+  box-shadow: 0 0 0 3px rgba(241, 134, 49, 0.16);
+}
+.ingChat__in::placeholder {
+  color: #99a3b2;
+}
+.ingChat__send {
+  width: 2.45rem;
+  height: 2.45rem;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #F18631, #dc6d15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+  padding: 0;
+  box-shadow: 0 8px 18px rgba(241, 134, 49, 0.35);
+}
+
+/* Notifications */
+.ingNtf {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f2f2f2;
+  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+.ingNtf__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.7rem
+    0.5rem
+    0.75rem;
+  padding-top: max(0.35rem, env(safe-area-inset-top, 0) * 0.5);
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+.ingNtf__h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  flex: 1;
+  text-align: left;
+}
+.ingNtf__mark {
+  border: none;
+  background: none;
+  color: #F18631;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+.ingNtf__sc {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.45rem 0.6rem
+    0.5rem
+    0.65rem;
+  padding-bottom: calc(var(--bnav-total) + 0.35rem);
+  box-sizing: border-box;
+}
+.ingNtf__g {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7a7a7a;
+  margin: 0.45rem 0.15rem 0.2rem 0.15rem;
+  text-align: left;
+}
+.ingNtf__g:first-of-type {
+  margin-top: 0.1rem;
+}
+.ingNtf__row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+  padding: 0.5rem 0.45rem 0.5rem 0.45rem;
+  margin-bottom: 0.4rem;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+.ingNtf__row--u {
+  background: #FFF1E6;
+  border-color: #d0edd8;
+}
+.ingNtf__ico {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.ingNtf__m {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-right: 0.1rem;
+}
+.ingNtf__t {
+  font-size: 0.88rem;
+  font-weight: 800;
+  margin: 0 0 0.1rem 0;
+  line-height: 1.2;
+  padding-right: 3.2rem;
+  word-wrap: break-word;
+}
+.ingNtf__s {
+  font-size: 0.72rem;
+  color: #6b6b6b;
+  line-height: 1.3;
+  margin: 0;
+  padding-right: 0.1rem;
+}
+.ingNtf__time {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.4rem;
+  font-size: 0.6rem;
+  color: #9a9a9a;
+  font-weight: 500;
+}
+.ingNtf__uDot {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.45rem;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: #F18631;
+}
+.ingNtf__empty {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem 1rem;
+  color: #6b6b6b;
+}
+.ingNtf__eIco {
+  width: 3.2rem;
+  height: 3.2rem;
+  margin: 0 auto 0.75rem;
+  color: #c0c0c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ingNtf__eT {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem 0;
+  color: #7a7a7a;
+}
+.ingNtf__eS {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 16rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Rate */
+.ingRate {
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f2f2f2;
+  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+.ingRate__h {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding: 0.35rem 0.3rem
+    0.45rem
+    0.3rem;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  padding-top: max(0.25rem, env(safe-area-inset-top, 0) * 0.6);
+  flex-shrink: 0;
+}
+.ingRate__back {
+  position: absolute;
+  left: 0.1rem;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: none;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: calc(0.15 * env(safe-area-inset-top, 0px));
+}
+.ingRate__title {
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0;
+  padding: 0 2.2rem;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+.ingRate__sc {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 0.75rem
+    max(0.5rem, env(safe-area-inset-bottom, 0) + 0.3rem) 0.8rem
+    0.75rem;
+}
+.ingRate__card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  padding: 0.6rem 0.65rem;
+  margin-bottom: 0.5rem;
+}
+.ingRate__oid {
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin: 0 0 0.2rem 0;
+}
+.ingRate__addr {
+  font-size: 0.7rem;
+  color: #6b6b6b;
+  line-height: 1.35;
+  margin: 0.05rem 0 0.35rem 0;
+}
+.ingRate__drow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+}
+.ingRate__dAv {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: #ddd;
+  flex-shrink: 0;
+}
+.ingRate__dN {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0;
+}
+.ingRate__secT {
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin: 0.1rem 0.05rem 0.3rem 0.05rem;
+  text-align: left;
+}
+.ingRate__stars {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 0.2rem;
+  margin-bottom: 0.15rem;
+}
+.ingRate__starB {
+  width: 2.1rem;
+  height: 2.1rem;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 0;
+  color: #F18631;
+}
+.ingRate__starB svg {
+  display: block;
+  width: 2.1rem;
+  height: 2.1rem;
+}
+.ingRate__sub {
+  font-size: 0.8rem;
+  color: #6b6b6b;
+  text-align: left;
+  min-height: 1.1rem;
+  margin: 0.05rem 0 0.3rem 0.05rem;
+  font-weight: 600;
+}
+.ingRate__tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.35rem;
+  margin: 0.1rem 0 0.35rem 0.05rem;
+  justify-content: flex-start;
+}
+.ingRate__tag {
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.3rem 0.55rem;
+  border-radius: 50rem;
+  border: 1.5px solid #d8d8d8;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+.ingRate__tag--on {
+  background: #F18631;
+  color: #fff;
+  border-color: #F18631;
+}
+.ingRate__ta {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 4.2rem;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 0.5rem 0.55rem;
+  font: inherit;
+  font-size: 0.86rem;
+  color: #1a1a1a;
+  resize: vertical;
+  background: #fafafa;
+  margin-bottom: 0.1rem;
+}
+.ingRate__taC {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 0.68rem;
+  color: #8a8a8a;
+  margin-bottom: 0.4rem;
+}
+.ingRate__tipL {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0.1rem 0.05rem 0.3rem 0.05rem;
+  text-align: left;
+  color: #1a1a1a;
+}
+.ingRate__tipRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.35rem;
+  margin: 0 0 0.3rem 0.05rem;
+  align-items: center;
+}
+.ingRate__tipP {
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 50rem;
+  padding: 0.35rem 0.6rem;
+  border: 1.5px solid #d8d8d8;
+  background: #fff;
+  color: #1a1a1a;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 3.1rem;
+}
+.ingRate__tipP--on {
+  background: #F18631;
+  color: #fff;
+  border-color: #F18631;
+}
+.ingRate__tipIn {
+  width: 4.2rem;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.4rem;
+  border: 1.5px solid #F18631;
+  border-radius: 8px;
+  text-align: center;
+}
+.ingRate__submit {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #F18631;
+  color: #fff;
+  font: inherit;
+  font-size: 0.98rem;
+  font-weight: 700;
+  padding: 0.78rem 0.5rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ingRate__skip {
+  display: block;
+  text-align: center;
+  color: #8a8a8a;
+  background: none;
+  border: none;
+  width: 100%;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  padding: 0.35rem 0 0.5rem 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ingRate__sep {
+  height: 0.25rem;
+}
+
+/* Centered customer rating page */
+.ingRate--centered {
+  background: radial-gradient(circle at top, #fff7f0 0%, #f4f4f4 52%, #f2f2f2 100%);
+}
+.ingRate__centerWrap {
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(0.85rem + env(safe-area-inset-top, 0)) 0.9rem calc(0.85rem + env(safe-area-inset-bottom, 0));
+  box-sizing: border-box;
+}
+.ingRate__centerCard {
+  width: 100%;
+  max-width: 24rem;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid #ededed;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+.ingRate__h--card {
+  border-bottom: 1px solid #f3f3f3;
+  background: #fff;
+}
+.ingRate__sc--card {
+  padding: 0.6rem 0.85rem max(0.5rem, env(safe-area-inset-bottom, 0) + 0.2rem) 0.85rem;
+}
+
+/* Driver rate customer */
+.drvRate {
+  background: radial-gradient(circle at top, #fff7f0 0%, #f3f3f3 50%, #f2f2f2 100%);
+}
+.drvRate__wrap {
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(0.8rem + env(safe-area-inset-top, 0)) 0.9rem calc(0.8rem + env(safe-area-inset-bottom, 0));
+  box-sizing: border-box;
+}
+.drvRate__card {
+  width: 100%;
+  max-width: 24rem;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+  padding: 1rem 0.95rem 0.8rem;
+}
+.drvRate__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-align: center;
+}
+.drvRate__sub {
+  margin: 0.2rem 0 0.7rem;
+  font-size: 0.78rem;
+  color: #6b6b6b;
+  text-align: center;
+}
+.drvRate__meta {
+  margin: 0 0 0.7rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+.drvRate__name {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+.drvRate__order {
+  margin: 0.12rem 0 0;
+  font-size: 0.72rem;
+  color: #777;
+  font-weight: 600;
+}
+
+/* Driver collect cash (COD) before rating */
+.drvCash__loading {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  text-align: center;
+}
+.drvCash__card {
+  text-align: center;
+}
+.drvCash__iconWrap {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 0.35rem;
+  color: #ea580c;
+}
+.drvCash__icon {
+  width: 52px;
+  height: 52px;
+}
+.drvCash__amountBand {
+  margin: 0.5rem 0 0.75rem;
+  padding: 0.85rem 0.75rem;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #fff7ed 0%, #ffedd5 55%, #fffbeb 100%);
+  border: 1px solid rgba(234, 88, 12, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+.drvCash__amountLbl {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9a3412;
+  margin-bottom: 0.25rem;
+}
+.drvCash__amount {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #c2410c;
+  line-height: 1.05;
+}
+.drvCash__meta {
+  text-align: left;
+  margin-bottom: 0.85rem;
+}
+.drvCash__hint {
+  margin: 0.55rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: #64748b;
+}
+.drvCash__btnPrimary {
+  width: 100%;
+  margin: 0;
+  padding: 0.72rem 1rem;
+  border: none;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 48%, #15803d 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 4px 14px rgba(22, 163, 74, 0.35);
+  -webkit-tap-highlight-color: transparent;
+}
+.drvCash__btnPrimary:active {
+  transform: scale(0.99);
+}
+
+/* Support / admin chat (/chat/support) */
+.ingChat--support .ingChat__head {
+  border-bottom-color: rgba(45, 184, 75, 0.18);
+}
+.ingChat__ava--support {
+  background: linear-gradient(135deg, #2a6bdc, #2DB84B 95%);
+}
+.ingChat__avaS--support {
+  background: linear-gradient(135deg, #ffb36b, #F18631);
+}
+.ingChat__dotA {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2DB84B;
+}
+.ingChat__subA {
+  font-size: 0.7rem;
+  color: #de6f17;
+  font-weight: 650;
+}
+.ingChat__pill {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(45, 184, 75, 0.14);
+  color: #b65a12;
+  border: 1px solid rgba(241, 134, 49, 0.28);
+}
+
+.ingChat--support .ingChat__bubbleR {
+  background: linear-gradient(145deg, #f29f57, #ea8324);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(241, 134, 49, 0.28);
+}
+
+.ingChat--support .ingChat__metaL {
+  color: #b46a2a;
+}
+.ingChat__spacerRt {
+  position: absolute;
+  right: 0.15rem;
+  top: 50%;
+  transform: translateY(calc(-50% + env(safe-area-inset-top, 0) * 0.12));
+  width: 2.5rem;
+  height: 2.5rem;
+  pointer-events: none;
+}
+.ingChat__chip--support {
+  border-color: rgba(241, 134, 49, 0.45);
+  color: #b85a12;
+}
+.ingChat .ingChat__attach:disabled {
+  opacity: 0.38;
+}
+
+/* Shop owner support chat width fix */
+.ingChat--shopOwner .ingChat__row > div {
+  max-width: min(84%, 30rem);
+}
+.ingChat--shopOwner .ingChat__bubbleR,
+.ingChat--shopOwner .ingChat__bubbleS {
+  max-width: 100%;
+  width: fit-content;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.ingChat--shopOwner .ingChat__head {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+}
+
+/* Nested under ShopOwnerLayout — keep chat header visible and layout stable */
+.sopCont > .ingChat.ingChat--shopOwner {
+  min-height: 0;
+  height: 100%;
+  flex: 1;
+}
+
+/* Nested under CustomerLayout — avoid 100vh fighting fixed bottom nav */
+.customer-app__outlet > .ingChat.ingChat--inCustomerShell {
+  min-height: 0;
+  flex: 1;
+  height: auto;
+}
+.customer-app__outlet > .ingChat.ingChat--inCustomerShell .ingChat__inBar {
+  /* Keep composer above fixed customer bottom nav */
+  padding-bottom: calc(var(--bnav-total) + 0.35rem);
+}
+
+/* Nested under DriverLayout — keep composer above fixed driver bottom nav */
+.driver-app__outlet > .ingChat.ingChat--inDriverShell {
+  min-height: 0;
+  flex: 1;
+  height: auto;
+}
+.driver-app__outlet > .ingChat.ingChat--inDriverShell .ingChat__inBar {
+  padding-bottom: calc(var(--dp-bnav-total) + 0.35rem);
+}

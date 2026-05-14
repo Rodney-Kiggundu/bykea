@@ -1,0 +1,1082 @@
+/* InGo Driver — Earnings, Wallet, Profile */
+.dvRoot {
+  --g: #F18631;
+  --t: #1a1a1a;
+  --m: #6b6b6b;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--t);
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f4f4f4;
+  --dp-bnav-total: calc(3.625rem + max(0.5rem, env(safe-area-inset-bottom, 0)));
+}
+.dvSc {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.4rem 0.7rem
+    0.4rem
+    0.75rem;
+  padding-bottom: var(--dp-bnav-total);
+  box-sizing: border-box;
+}
+.dvH {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.1rem
+    0.35rem
+    0.1rem;
+  padding-top: max(0.25rem, env(safe-area-inset-top, 0) * 0.5);
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  gap: 0.3rem;
+}
+.dvH h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  flex: 1;
+  text-align: left;
+  padding: 0 0.1rem 0 0.15rem;
+}
+.dvFil {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  background: #fff;
+  color: #F18631;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.dvSum {
+  background: linear-gradient(125deg, #1a8a2e, #F18631, #3dc75d);
+  border-radius: 14px;
+  padding: 0.75rem 0.75rem 0.6rem 0.75rem;
+  margin: 0.1rem 0.05rem 0.5rem 0.05rem;
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(241, 134, 49, 0.2);
+  text-align: left;
+}
+.dvSumL {
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.92;
+  margin: 0 0 0.1rem 0;
+}
+.dvSumAmt {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0 0 0.15rem 0;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+.dvSumP {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  margin: 0 0 0.4rem 0;
+}
+.dvSumNet {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.98);
+  margin: 0 0 0.35rem 0;
+  line-height: 1.35;
+}
+.dvSumNet span {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.dvSum .dv3r {
+  margin-top: 0.35rem;
+}
+.dvRnet {
+  font-size: 0.72rem;
+  color: #5a6b5a;
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+.dvChNote {
+  font-size: 0.72rem;
+  color: #666;
+  margin: -0.35rem 0 0.5rem;
+  text-align: left;
+  line-height: 1.4;
+}
+.dv3r {
+  display: flex;
+  flex-direction: row;
+  gap: 0.35rem;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.dv3b {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fff;
+  color: #1a1a1a;
+  border-radius: 8px;
+  padding: 0.4rem 0.25rem 0.35rem 0.25rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.dv3b b {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 0.1rem 0;
+}
+.dv3b span {
+  font-size: 0.58rem;
+  color: #5a5a5a;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+.dvTabs {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  margin: 0.2rem 0.05rem 0.4rem 0.05rem;
+  border-bottom: 1.5px solid #eee;
+  padding: 0 0.1rem 0.05rem 0.1rem;
+}
+.dvTab {
+  flex: 1 1 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8a8a8a;
+  padding: 0.35rem 0.1rem 0.4rem 0.1rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -1.5px;
+  box-sizing: border-box;
+}
+.dvTab--on {
+  color: #F18631;
+  font-weight: 800;
+  border-bottom-color: #F18631;
+}
+.dvCh {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+  padding: 0.45rem 0.5rem 0.4rem 0.5rem;
+  margin: 0.1rem 0.05rem 0.5rem 0.05rem;
+  min-height: 7.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.dvChT {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0 0 0.25rem 0.05rem;
+  text-align: left;
+  letter-spacing: 0.05em;
+}
+.dvBars {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.15rem;
+  height: 5.5rem;
+  padding: 0.1rem 0.05rem 0.15rem 0.05rem;
+  margin-top: 0.1rem;
+}
+.dvBcol {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 0;
+}
+.dvBtrack {
+  flex: 1 1 0;
+  width: 78%;
+  max-width: 1.6rem;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: stretch;
+}
+.dvBbar {
+  width: 100%;
+  min-height: 0.35rem;
+  background: #F18631;
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 1px 2px rgba(241, 134, 49, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.1rem 0.08rem 0.05rem 0.08rem;
+  box-sizing: border-box;
+}
+.dvBval {
+  text-align: center;
+  font-size: 0.5rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.05;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dvBday {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #6b6b6b;
+  margin-top: 0.1rem;
+  line-height: 1;
+  text-align: center;
+  width: 100%;
+  flex: 0 0 auto;
+}
+.dvBD {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+  padding: 0.4rem 0.5rem 0.5rem 0.5rem;
+  margin: 0.15rem 0.05rem 0.4rem 0.05rem;
+  text-align: right;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+.dvBDL {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #333;
+  font-weight: 500;
+  margin: 0.1rem 0.05rem;
+  text-align: left;
+  gap: 0.4rem;
+}
+.dvBDR {
+  text-align: right;
+  font-weight: 800;
+  flex: 0 0 auto;
+}
+.dvBDR--r {
+  color: #c62828;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.dvBDR--g2 {
+  color: #A85612;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.dvBDR--b {
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+.dvBDR--net {
+  color: #F18631;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-top: 0.1rem;
+}
+.dvBdiv {
+  height: 1px;
+  background: #eee;
+  margin: 0.25rem 0.1rem 0.2rem 0.1rem;
+}
+.dvRsec {
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin: 0.2rem 0.05rem 0.2rem 0.05rem;
+  text-align: left;
+  color: #1a1a1a;
+}
+.dvRrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.35rem 0.1rem 0.45rem 0.1rem;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 0.3rem;
+}
+.dvRrow:last-child {
+  border-bottom: none;
+}
+.dvRid {
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 0.1rem 0;
+}
+.dvRto {
+  font-size: 0.7rem;
+  color: #6b6b6b;
+  margin: 0;
+  line-height: 1.2;
+  max-width: 11rem;
+  word-wrap: break-word;
+}
+.dvRsub {
+  font-size: 0.64rem;
+  color: #888;
+  line-height: 1.1;
+  margin: 0;
+  text-align: right;
+  width: 4rem;
+  flex: 0 0 auto;
+}
+.dvRAmt {
+  color: #F18631;
+  font-size: 0.84rem;
+  font-weight: 800;
+  flex: 0 0 auto;
+  min-width: 2.4rem;
+  text-align: right;
+}
+/* Wallet */
+.dwb {
+  background: linear-gradient(120deg, #1a7a2e, #F18631, #3dc75d);
+  border-radius: 12px;
+  padding: 0.65rem 0.7rem 0.55rem 0.7rem;
+  color: #fff;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(241, 134, 49, 0.2);
+  margin: 0.1rem 0.05rem 0.4rem 0.05rem;
+}
+.dwbL1 {
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.92;
+  margin: 0 0 0.05rem 0;
+}
+.dwbMain {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+.dwbCodNote {
+  margin: 0 0 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.35;
+  opacity: 0.92;
+  max-width: 18rem;
+}
+.dwbL2 {
+  font-size: 0.68rem;
+  opacity: 0.9;
+  margin: 0 0 0.05rem 0;
+  font-weight: 500;
+}
+.dwbSubAmt {
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0 0 0.3rem 0;
+}
+/* Deposit top-up: Paynow vs card (single CTA) */
+.dwb2Stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+}
+.dwbPayFs {
+  border-radius: 10px;
+  margin: 0;
+  padding: 0.45rem 0.55rem 0.55rem;
+}
+.dwbPayFs--lightOnDark {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+.dwbPayFs--onLight {
+  border: 1px solid rgba(198, 40, 40, 0.35);
+  background: rgba(255, 255, 255, 0.65);
+}
+.dwbPayLeg {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0 0.2rem;
+}
+.dwbPayFs--lightOnDark .dwbPayLeg {
+  color: rgba(255, 255, 255, 0.95);
+}
+.dwbPayFs--onLight .dwbPayLeg {
+  color: #6b1a1a;
+}
+.dwbPayOpt {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+.dwbPayFs--lightOnDark .dwbPayOpt {
+  color: #fff;
+}
+.dwbPayFs--onLight .dwbPayOpt {
+  color: #2a2a2a;
+}
+.dwbPayOpt:first-of-type {
+  margin-top: 0.12rem;
+}
+.dwbPayOpt input {
+  margin-top: 0.16rem;
+  flex-shrink: 0;
+}
+.dwb2Stack .dwbO {
+  width: 100%;
+  flex: none;
+}
+
+.dwb2 {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+.dwb2 button {
+  flex: 1 1 0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.45rem 0.3rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+}
+.dwb2 .dwbW {
+  background: #fff;
+  color: #1a1a1a;
+}
+.dwb2 .dwbO {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+}
+.dwi {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  background: #FFF1E6;
+  border: 1px solid #F5C9A3;
+  border-radius: 10px;
+  padding: 0.5rem 0.55rem;
+  margin: 0.1rem 0.05rem 0.4rem 0.05rem;
+  text-align: left;
+  align-items: flex-start;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #2a2a2a;
+}
+.dwiB {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #A85612;
+  margin: 0.1rem 0 0 0;
+}
+.dwiLow {
+  border: 1.5px solid #c62828;
+  background: #ffebee;
+  border-radius: 10px;
+  padding: 0.4rem 0.45rem 0.45rem 0.5rem;
+  margin: 0.15rem 0.05rem 0.4rem 0.05rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+.dwiBdg {
+  display: inline-block;
+  background: #c62828;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 0.12rem 0.28rem 0.1rem 0.28rem;
+  border-radius: 3px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0.1rem 0.1rem 0;
+}
+.dwiLow p {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #4a0a0a;
+  line-height: 1.2;
+  flex: 1 1 5rem;
+}
+.dwiLow button {
+  border: 1.5px solid #c62828;
+  color: #c62828;
+  background: #fff;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 0.25rem 0.4rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.dww {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 0.4rem 0.45rem 0.5rem 0.45rem;
+  margin: 0.1rem 0.05rem 0.4rem 0.05rem;
+  text-align: left;
+}
+.dwwT {
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin: 0 0 0.2rem 0.05rem;
+  color: #1a1a1a;
+}
+.dwwB {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.1rem 0.05rem 0.25rem 0.05rem;
+  font-size: 0.8rem;
+}
+.dwwA {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 600;
+}
+.dwwC {
+  border: none;
+  background: none;
+  color: #F18631;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.dv-inp2 {
+  width: 100%;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.4rem 0.45rem;
+  margin: 0.1rem 0.05rem 0.1rem 0.05rem;
+  box-sizing: border-box;
+}
+.dv-inp2:focus {
+  outline: none;
+  border-color: #F18631;
+  box-shadow: 0 0 0 2px rgba(241, 134, 49, 0.2);
+}
+.dvRowL {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0.15rem 0.05rem 0.1rem 0.05rem;
+  align-items: center;
+  font-size: 0.72rem;
+}
+.dvPills {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.3rem;
+  margin: 0.1rem 0.05rem 0.2rem 0.05rem;
+  scrollbar-width: none;
+  padding: 0.1rem 0.05rem;
+  -ms-overflow-style: none;
+}
+.dvPills::-webkit-scrollbar {
+  display: none;
+}
+.dvPil {
+  flex: 0 0 auto;
+  border: 1.2px solid #d8d8d8;
+  background: #fff;
+  color: #444;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  border-radius: 50rem;
+  padding: 0.22rem 0.5rem;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.dvPil--on {
+  background: #F18631;
+  color: #fff;
+  border-color: #F18631;
+}
+.dvTxR {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.35rem 0.1rem;
+  border-bottom: 1px solid #f3f3f3;
+  gap: 0.4rem;
+  text-align: left;
+}
+.dvTxR:last-child {
+  border-bottom: none;
+}
+.dvAr {
+  width: 1.7rem;
+  text-align: center;
+  line-height: 0;
+  flex-shrink: 0;
+}
+.dvTxx {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 0.1rem 0;
+}
+.dvTdt {
+  font-size: 0.65rem;
+  color: #8a8a8a;
+  line-height: 1.1;
+  font-weight: 500;
+  margin: 0;
+  display: block;
+}
+.dvTamt {
+  font-size: 0.82rem;
+  font-weight: 800;
+  min-width: 2.2rem;
+  text-align: right;
+  line-height: 1.1;
+  flex: 0 0 auto;
+}
+.dvTamtE {
+  color: #A85612;
+}
+.dvTamtC {
+  color: #c62828;
+}
+.dvTamtW {
+  color: #1565c0;
+}
+.dvBtn1 {
+  width: 100%;
+  border: none;
+  background: #F18631;
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  padding: 0.5rem 0.4rem;
+  margin: 0.1rem 0.05rem 0.1rem 0.05rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Profile */
+.dpr {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  color: #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --dp-bnav-total: calc(3.625rem + max(0.5rem, env(safe-area-inset-bottom, 0)));
+}
+.dpr-hero {
+  position: relative;
+  background: #F18631;
+  color: #fff;
+  text-align: center;
+  padding: 0.8rem 0.9rem 0.6rem 0.9rem;
+  padding-top: max(0.2rem, env(safe-area-inset-top, 0));
+  flex-shrink: 0;
+  border-bottom: 1px solid #28a345;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+.dpr-av {
+  position: relative;
+  display: inline-block;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #F6B27E, #e0f0e0);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  margin: 0 auto 0.2rem;
+}
+.dpr-avBtn {
+  position: absolute;
+  right: 0.05rem;
+  bottom: 0.1rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  border: 2px solid #fff;
+  background: #fff;
+  color: #F18631;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.dpr-n {
+  font-size: 1.02rem;
+  font-weight: 800;
+  margin: 0.1rem 0.2rem 0.05rem 0.2rem;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+.dpr-p {
+  font-size: 0.8rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin: 0 0 0.15rem 0;
+  word-wrap: break-word;
+}
+.dpr-rt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin: 0.1rem 0.2rem 0.1rem 0.2rem;
+  letter-spacing: 0.05em;
+}
+.dpr-rt span {
+  color: #e0ffe8;
+  font-size: 0.7rem;
+}
+.dpr-vg {
+  display: table;
+  margin: 0.1rem auto 0.1rem;
+  background: #fff;
+  color: #A85612;
+  font-size: 0.58rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.35rem 0.08rem 0.35rem;
+  border-radius: 4px;
+  line-height: 1;
+}
+.dpr-3r {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.2rem;
+  max-width: 20rem;
+  margin: 0.25rem auto 0.1rem;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+}
+.dpr-3b {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+}
+.dpr-3b b {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.1;
+  margin: 0 0 0.1rem 0;
+}
+.dpr-3b span,
+.dpr-3b s {
+  font-size: 0.58rem;
+  font-weight: 500;
+  opacity: 0.8;
+  text-decoration: none;
+  line-height: 1.1;
+  display: block;
+}
+.dpr-3b .c {
+  color: #e0ffe0;
+  font-size: 0.85rem;
+  font-weight: 800;
+  opacity: 1;
+  margin: 0 0 0.05rem 0;
+}
+.dpr-veh {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+  padding: 0.5rem 0.45rem 0.45rem 0.5rem;
+  margin: 0.1rem 0.55rem 0.35rem 0.55rem;
+  text-align: left;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+.dpr-vehB {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-right: 1.6rem;
+  position: relative;
+  width: 100%;
+}
+.dpr-vehB h2 {
+  margin: 0 0 0.1rem 0;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+.dpr-vehB p {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  margin: 0 0 0.05rem 0;
+  color: #1a1a1a;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+.dpr-vehB .pl {
+  color: #6b6b6b;
+  font-size: 0.72rem;
+  margin: 0.05rem 0 0 0;
+  font-weight: 500;
+}
+.dpr-vehEd {
+  position: absolute;
+  right: 0.25rem;
+  top: 0.3rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: none;
+  background: none;
+  color: #F18631;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dpr-secH {
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #7a7a7a;
+  margin: 0.45rem 0.65rem 0.15rem 0.6rem;
+  text-align: left;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  padding: 0 0.05rem;
+  box-sizing: content-box;
+}
+.dpr-secB {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  margin: 0.1rem 0.55rem 0.1rem 0.55rem;
+  overflow: hidden;
+}
+.dprIt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  text-decoration: none;
+  color: #1a1a1a;
+  padding: 0.5rem 0.45rem 0.5rem 0.4rem;
+  min-height: 2.1rem;
+  width: 100%;
+  background: #fff;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: none;
+  border-bottom: 1px solid #f2f2f2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  gap: 0.3rem;
+}
+.dpr-secB .dprIt:last-child {
+  border-bottom: none;
+}
+.dprIt--lo {
+  color: #c62828;
+  justify-content: center;
+  font-weight: 700;
+}
+.dprIt--lo .dpr-aw {
+  display: none;
+}
+.dprIcoL {
+  width: 1.1rem;
+  text-align: center;
+  color: #555;
+  line-height: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.1rem;
+}
+.dpr-tt {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+  line-height: 1.2;
+}
+.dpr-aw {
+  color: #b8b8b8;
+  flex: 0 0 auto;
+  line-height: 0;
+  font-size: 0.55rem;
+}
+.dpr-sc {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #f0f0f0;
+  padding: 0.1rem 0.05rem 0.1rem 0.05rem;
+  padding-bottom: var(--dp-bnav-total);
+  box-sizing: content-box;
+}
+.dpr-hrB {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.2rem 0.35rem;
+  padding: 0.1rem 0.15rem 0.25rem 0.15rem;
+  margin: 0 0.1rem 0.05rem 0.1rem;
+}
+.dpr-sico {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.4rem;
+  line-height: 0;
+  font-weight: 900;
+  margin-left: 0.05rem;
+}
+.dpr-sfb {
+  background: #1877f2;
+  font-size: 0.55rem;
+}
+.dpr-sig {
+  background: linear-gradient(40deg, #e6683c, #bc1888, #3b9cff);
+  font-size: 0.4rem;
+}
+.dpr-sx {
+  background: #1a1a1a;
+  font-size: 0.45rem;
+  font-style: normal;
+  color: #fff;
+  font-weight: 700;
+  font-family: system-ui, sans-serif;
+}
+/* Driver profile — registration details only */
+.dprRegCard {
+  padding: 0.15rem 0.65rem 0.35rem;
+}
+.dprRegRow {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.dprRegRow:last-child {
+  border-bottom: none;
+}
+.dprRegLab {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.12rem;
+}
+.dprRegVal {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  word-break: break-word;
+  line-height: 1.35;
+}
+
+.dpr-ohr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: #FFF1E6;
+  border: 1px solid #b8e5c0;
+  border-radius: 8px;
+  padding: 0.4rem 0.45rem 0.4rem 0.4rem;
+  margin: 0.2rem 0.55rem 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1a7a2a;
+  text-align: center;
+  line-height: 1.2;
+  box-sizing: border-box;
+  width: auto;
+  max-width: calc(100% - 1.1rem);
+  margin-left: 0.55rem;
+  margin-right: 0.55rem;
+  flex-wrap: wrap;
+}
+.dpr-ohr svg,
+.dpr-ohr .ic {
+  flex: 0 0 auto;
+  line-height: 0;
+  color: #F18631;
+}

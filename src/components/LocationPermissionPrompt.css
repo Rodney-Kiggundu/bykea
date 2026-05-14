@@ -1,0 +1,78 @@
+.loc-perm {
+  box-sizing: border-box;
+  border-radius: 14px;
+  padding: 0.75rem 0.85rem;
+  background: linear-gradient(165deg, #fff8f0 0%, #fff 55%);
+  border: 1px solid rgba(241, 134, 49, 0.35);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.loc-perm--customer {
+  position: fixed;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: calc(var(--bnav-total, 4.5rem) + 0.35rem);
+  z-index: 110;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.loc-perm--flow {
+  flex-shrink: 0;
+  margin: 0 0.75rem 0.35rem;
+  z-index: 4;
+}
+
+.loc-perm__title {
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.loc-perm__text {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #444;
+}
+
+.loc-perm__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.loc-perm__btn {
+  flex: 1 1 auto;
+  min-width: 7.5rem;
+  border: none;
+  border-radius: 11px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.loc-perm__btn--primary {
+  background: #f18631;
+  color: #fff;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.loc-perm__btn--primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.loc-perm__btn--ghost {
+  background: #fff;
+  color: #333;
+  border: 1px solid #e6e6e6;
+}
+
+.loc-perm__btn:active:not(:disabled) {
+  filter: brightness(0.96);
+}

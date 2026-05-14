@@ -1,0 +1,10 @@
+# Railway: set the service **Root Directory** to `server` when deploying from the monorepo root.
+# https://docs.railway.app/deploy/builds#root-directory
+
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
