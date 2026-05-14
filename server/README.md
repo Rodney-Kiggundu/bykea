@@ -89,6 +89,18 @@ You can push the **whole** `bykea` monorepo; Railway will only build the **`serv
 3. Railway creates a service — open it → **Settings** → **Root Directory** → set to **`server`** (important).
 4. **Settings** → **Networking** → **Generate domain** (e.g. `https://your-service.up.railway.app`).
 
+### If you see the full **InGo** website on Railway
+
+That means the service is building the **repo root** (Create React App), not this API.
+
+1. Open the **same** Railway service → **Settings**.
+2. Set **Root Directory** to **`server`** (exactly — the folder that contains `server/package.json` and this README).
+3. Set **Start Command** to **`npm start`** (or leave empty so `server/railway.toml` `startCommand` is used).
+4. Remove any root-level **Build** that runs `react-scripts build` or serves `build/` for this service. This service should only run **`node index.js`** via `npm start` from **`server/`**.
+5. Redeploy. Visiting your Railway URL in a browser should show **JSON** from `GET /` (Paynow API metadata) or **`GET /health`**, not the React SPA.
+
+Host the **customer React app** on Firebase Hosting, Netlify, Vercel, etc., and set **`REACT_APP_SHOP_PAYNOW_LOCAL_URL`** there to your Railway origin, e.g. `https://bykea-production.up.railway.app` (no trailing slash required).
+
 ### 3. Environment variables (Railway → Variables)
 
 | Variable | Example / notes |

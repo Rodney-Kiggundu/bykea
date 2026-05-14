@@ -12,6 +12,16 @@ const PAYNOW_RETURN_URL = process.env.PAYNOW_RETURN_URL || '';
 const app = express();
 app.use(cors({ origin: true }));
 
+/** Confirms this host is the Paynow API (not the React app) when opened in a browser */
+app.get('/', (_req, res) => {
+  res.status(200).type('application/json').send({
+    ok: true,
+    service: 'ingo-paynow-local',
+    hint: 'Shop/taxi Paynow flows POST to /paynow/initiate. The customer app should be hosted separately; set REACT_APP_SHOP_PAYNOW_LOCAL_URL to this origin.',
+    endpoints: ['GET /health', 'POST /paynow/initiate', 'POST /paynow/relay-initiate', 'POST /paynow/result'],
+  });
+});
+
 /** Railway / load balancer health check */
 app.get('/health', (_req, res) => {
   res.status(200).type('application/json').send({ ok: true, service: 'ingo-paynow-local' });
