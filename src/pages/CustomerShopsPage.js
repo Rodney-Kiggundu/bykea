@@ -93,7 +93,6 @@ export default function CustomerShopsPage() {
   }, [catParam]);
 
   const isLanding = !showAll && selectedCategory === null;
-  const showShopList = showAll || selectedCategory !== null;
 
   useEffect(() => {
     if (!catParam || selectedCategory) return;

@@ -309,7 +309,7 @@ export default function DriverHomePage() {
     }
     setActionMsg('');
     setOnline(true);
-  }, [online, supabase, driverId]);
+  }, [online, driverId]);
 
   const onAccept = useCallback(
     async (offer) => {

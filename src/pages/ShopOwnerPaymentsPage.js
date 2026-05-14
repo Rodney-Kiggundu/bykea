@@ -71,7 +71,6 @@ export default function ShopOwnerPaymentsPage() {
 
   const session = getShopOwnerSession();
   const monthStart = startOfMonth();
-  const monthStartIso = monthStart.toISOString();
   const monthLabel = useMemo(
     () => `${monthStart.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })} – ${new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`,
     [monthStart],

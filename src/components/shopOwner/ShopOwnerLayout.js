@@ -113,18 +113,6 @@ function IcGear({ on }) {
     </Ic>
   );
 }
-function IcHelp({ on }) {
-  const c = on ? '#fff' : '#333';
-  return (
-    <Ic>
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-        <circle cx="12" cy="12" r="7" stroke={c} strokeWidth="1.2" fill="none" />
-        <path d="M9.2 9.2a2.6 2.6 0 0 1 2.4-.3 1.4 1.4 0 0 1 .2 1.3c0 .3-.1.4-.3.5l-1.2.8" stroke={c} strokeWidth="1" fill="none" />
-        <path d="M12 16.2h.1" stroke={c} strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    </Ic>
-  );
-}
 function IcChat({ on }) {
   const c = on ? '#fff' : '#333';
   return (
@@ -163,28 +151,6 @@ function IcHamb() {
     </svg>
   );
 }
-function IcBell() {
-  return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden>
-      <path
-        d="M12 3a2.5 2.5 0 0 0-2.5 2.5V9L7 12v1h10v-1l-2.5-3V5.5A2.5 2.5 0 0 0 12 3Z M9.5 19a2.5 2.5 0 0 0 5 0"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        fill="none"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-function IcUser() {
-  return (
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden>
-      <circle cx="12" cy="8" r="2.5" fill="currentColor" />
-      <path d="M5 19c.6-2.2 2.4-3.2 7-3.2s6.2 1.1 6.6 2.2" stroke="currentColor" strokeWidth="1.1" fill="none" />
-    </svg>
-  );
-}
-
 const nav = [
   { to: '/shop-owner/dashboard', label: 'Dashboard', Icon: IcHome, end: true },
   { to: '/shop-owner/orders', label: 'Orders', Icon: IcBox },

@@ -770,7 +770,7 @@ export default function TaxiBookingPage({ variant = 'full' } = {}) {
           ) : (
             <section className="taxi__ridePick" aria-label="Choose ride type">
               <h2 className="taxi__rideT">Ride Type</h2>
-              <div className="taxi__rideRow" role="list">
+              <div className="taxi__rideRow" role="radiogroup" aria-label="Ride type">
                 {RIDE_TYPES.map((r) => {
                   const Ic = ICONS[r.id];
                   const isOn = selected === r.id;
@@ -781,8 +781,8 @@ export default function TaxiBookingPage({ variant = 'full' } = {}) {
                       type="button"
                       className={isOn ? 'taxi__rideCard taxi__rideCard--on' : 'taxi__rideCard'}
                       onClick={() => setSelected(r.id)}
-                      role="listitem"
-                      aria-pressed={isOn}
+                      role="radio"
+                      aria-checked={isOn}
                     >
                       {isOn ? (
                         <span className="taxi__rideCheck" aria-hidden>

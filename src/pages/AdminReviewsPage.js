@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
 import './adminPortal.css';
 
@@ -90,7 +90,7 @@ export default function AdminReviewsPage() {
     };
   }, []);
 
-  const resolvePerson = (role, appUserId, driverId) => {
+  const resolvePerson = useCallback((role, appUserId, driverId) => {
     if (String(role).toLowerCase() === 'customer') {
       const u = userMap[appUserId];
       return u?.full_name || u?.email || appUserId || 'Customer';
@@ -100,7 +100,7 @@ export default function AdminReviewsPage() {
       return d?.full_name || d?.email || driverId || 'Driver';
     }
     return '—';
-  };
+  }, [userMap, driverMap]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -127,7 +127,7 @@ export default function AdminReviewsPage() {
         ref.includes(q);
       return roleOk && matchQ;
     });
-  }, [rows, search, roleFilter, userMap, driverMap]);
+  }, [rows, search, roleFilter, resolvePerson]);
 
   return (
     <div className="adm">

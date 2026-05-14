@@ -131,7 +131,6 @@ export default function ShopOwnerAnalyticsPage() {
   const [loadError, setLoadError] = useState('');
   const [allPoints, setAllPoints] = useState([]);
   const [allOrdersCount, setAllOrdersCount] = useState(0);
-  const [allRevenue, setAllRevenue] = useState(0);
   const [topProducts, setTopProducts] = useState([]);
   const [aov, setAov] = useState(0);
   const [completionRate, setCompletionRate] = useState(0);
@@ -175,7 +174,6 @@ export default function ShopOwnerAnalyticsPage() {
       setAllPoints([]);
       setTopProducts([]);
       setAllOrdersCount(0);
-      setAllRevenue(0);
       setAov(0);
       setCompletionRate(0);
       setActiveDay('—');
@@ -286,7 +284,6 @@ export default function ShopOwnerAnalyticsPage() {
 
     setAllPoints(points);
     setAllOrdersCount(totalOrders);
-    setAllRevenue(totalRevenue);
     setAov(aovNum);
     setCompletionRate(completion);
     setActiveDay(activePoint ? activePoint.d.split(' ')[0] : '—');
