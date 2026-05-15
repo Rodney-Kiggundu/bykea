@@ -1,4 +1,9 @@
 # Shrink build context — only server/ is copied in the Dockerfile
+# Never bake local server/.env into the image (empty keys would ship; Railway injects secrets at runtime).
+server/.env
+**/.env
+**/.env.local
+
 **/node_modules
 build
 .git

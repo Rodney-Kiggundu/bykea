@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ override: false });
 
 const express = require('express');
 const cors = require('cors');
@@ -22,6 +22,16 @@ const PAYNOW_RETURN_URL =
   String(process.env.PAYNOW_RETURN_URL || '').trim() ||
   `${DEFAULT_CUSTOMER_APP.replace(/\/$/, '')}/order-confirmation`;
 
+function paynowCredentialFlags() {
+  const id = String(process.env.PAYNOW_INTEGRATION_ID || '').trim();
+  const key = String(process.env.PAYNOW_INTEGRATION_KEY || '').trim();
+  return {
+    paynowIntegrationIdSet: Boolean(id),
+    paynowIntegrationKeySet: Boolean(key),
+    paynowCredentialsReady: Boolean(id && key),
+  };
+}
+
 const app = express();
 app.use(
   cors({
@@ -38,15 +48,22 @@ app.get('/', (_req, res) => {
   res.status(200).type('application/json').send({
     ok: true,
     service: 'ingo-paynow-local',
+    ...paynowCredentialFlags(),
     hint:
       'Shop/taxi Paynow flows POST to /paynow/initiate. Default CRA origin: https://bykea-production.up.railway.app (override with REACT_APP_SHOP_PAYNOW_LOCAL_URL).',
     endpoints: ['GET /health', 'POST /paynow/initiate', 'POST /paynow/relay-initiate', 'POST /paynow/result'],
   });
 });
 
-/** Railway / load balancer health check */
+/** Railway / load balancer health check (no secrets — only whether vars are present) */
 app.get('/health', (_req, res) => {
-  res.status(200).type('application/json').send({ ok: true, service: 'ingo-paynow-local' });
+  res.status(200).type('application/json').send({
+    ok: true,
+    service: 'ingo-paynow-local',
+    ...paynowCredentialFlags(),
+    hint:
+      'If paynowCredentialsReady is false, add PAYNOW_INTEGRATION_ID and PAYNOW_INTEGRATION_KEY to THIS Railway service (Variables tab), save, redeploy. Project-wide variables must be linked to this service.',
+  });
 });
 
 const PAYNOW_OFFICIAL_INITIATE =
@@ -121,8 +138,8 @@ app.post('/paynow/result', express.urlencoded({ extended: true }), (req, res) =>
 });
 
 app.post('/paynow/initiate', async (req, res) => {
-  const id = process.env.PAYNOW_INTEGRATION_ID || '';
-  const key = process.env.PAYNOW_INTEGRATION_KEY || '';
+  const id = String(process.env.PAYNOW_INTEGRATION_ID || '').trim();
+  const key = String(process.env.PAYNOW_INTEGRATION_KEY || '').trim();
   const resultUrl = PAYNOW_RESULT_URL;
   const returnUrl = PAYNOW_RETURN_URL;
 
@@ -131,6 +148,12 @@ app.post('/paynow/initiate', async (req, res) => {
       ok: false,
       error:
         'Missing Paynow credentials: set PAYNOW_INTEGRATION_ID and PAYNOW_INTEGRATION_KEY in Railway (or server/.env). They come from your Paynow merchant dashboard. Optional: PAYNOW_RETURN_URL, PAYNOW_RESULT_URL, CUSTOMER_APP_PUBLIC_URL, PUBLIC_PAYNOW_API_ORIGIN.',
+      diagnostics: {
+        ...paynowCredentialFlags(),
+        checkHealth: 'GET /health on this same host shows paynowIntegrationIdSet / paynowIntegrationKeySet without exposing values.',
+        commonFix:
+          'In Railway open the service that runs THIS Docker image (bykea Paynow API), Variables → add both keys exactly (no quotes). If you use Project Variables, link them to this service. Redeploy after saving.',
+      },
     });
   }
 

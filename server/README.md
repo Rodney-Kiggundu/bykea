@@ -121,6 +121,14 @@ Host the **customer React app** on Firebase Hosting, Netlify, Vercel, etc., and 
 
 After the first deploy, copy the **public Railway URL** (no trailing slash required).
 
+### Paynow keys show as missing on `/paynow/initiate`
+
+1. Open **`https://bykea-production.up.railway.app/health`** (or your service URL + `/health`). You should see **`paynowCredentialsReady": true`**. If it is **`false`**, Railway is **not** injecting the keys into **this** service.
+2. In Railway, open the **same** service that runs the **Dockerfile / Paynow API** (not a separate static/React service). **Variables** → add **`PAYNOW_INTEGRATION_ID`** and **`PAYNOW_INTEGRATION_KEY`** with **exact** names (no spaces, no quotes in the name). Values: paste from Paynow only in the value field.
+3. If you use **Project** or **Shared** variables, ensure they are **linked / available** to this service (Railway UI varies; each service often needs its own copy unless shared explicitly).
+4. Click **Redeploy** after saving variables.
+5. Do **not** rely on a `server/.env` file inside the deployed image for Railway secrets; the repo **`.dockerignore`** excludes `server/.env` so empty local files cannot override production.
+
 ### 4. Point the React app at Railway
 
 In your **hosted** frontend env (Netlify, Vercel, `.env.production`, etc.):
