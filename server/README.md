@@ -108,10 +108,12 @@ Host the **customer React app** on Firebase Hosting, Netlify, Vercel, etc., and 
 | Variable | Example / notes |
 |----------|-----------------|
 | `PORT` | **Do not set** — Railway injects `PORT` automatically. |
-| `PAYNOW_INTEGRATION_ID` | From Paynow dashboard. |
-| `PAYNOW_INTEGRATION_KEY` | From Paynow dashboard. |
-| `PAYNOW_RETURN_URL` | **Your live customer app** URL where shoppers return after Paynow, e.g. `https://your-app.netlify.app/order-confirmation` or your custom domain + path. |
-| `PAYNOW_RESULT_URL` | **Must be HTTPS** Paynow can reach. Often `https://<your-supabase>.supabase.co/functions/v1/paynow-result` if you use the Edge callback, **or** `https://<railway-domain>/paynow/result` if Paynow is allowed to POST to this server (currently minimal handler — prefer Edge for production). |
+| `PAYNOW_INTEGRATION_ID` | **Required** — from Paynow merchant dashboard. |
+| `PAYNOW_INTEGRATION_KEY` | **Required** — from Paynow merchant dashboard. |
+| `PAYNOW_RETURN_URL` | Optional. Defaults to `https://hotel-demo-11dcb.web.app/order-confirmation` (see repo `.firebaserc`). Set to your live app’s `/order-confirmation` if different. |
+| `PAYNOW_RESULT_URL` | Optional. Defaults to `https://bykea-production.up.railway.app/paynow/result` (this API). Use Supabase Edge `paynow-result` instead if you prefer. |
+| `CUSTOMER_APP_PUBLIC_URL` | Optional. e.g. `https://YOUR-PROJECT.web.app` — used with default return path `/order-confirmation` when `PAYNOW_RETURN_URL` is unset. |
+| `PUBLIC_PAYNOW_API_ORIGIN` | Optional. Defaults to `https://bykea-production.up.railway.app` — used to build default `PAYNOW_RESULT_URL`. |
 | `PAYNOW_OMIT_AUTH_EMAIL` | `true` for Paynow test, unless you set `PAYNOW_MERCHANT_AUTH_EMAIL`. |
 | `SUPABASE_URL` | Optional; needed if this server should update orders after initiate. |
 | `SUPABASE_SERVICE_ROLE_KEY` | Optional; same as above. |

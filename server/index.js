@@ -6,8 +6,21 @@ const { Paynow } = require('paynow');
 const { createClient } = require('@supabase/supabase-js');
 
 const PORT = Number(process.env.PORT) || 4000;
-const PAYNOW_RESULT_URL = process.env.PAYNOW_RESULT_URL || '';
-const PAYNOW_RETURN_URL = process.env.PAYNOW_RETURN_URL || '';
+
+/** Public origin of this Paynow API (Railway). Override if you deploy under another host. */
+const DEFAULT_PUBLIC_PAYNOW_API =
+  String(process.env.PUBLIC_PAYNOW_API_ORIGIN || '').trim() || 'https://bykea-production.up.railway.app';
+
+/** Where shoppers return after Paynow (your CRA / Firebase site). Override with PAYNOW_RETURN_URL or CUSTOMER_APP_PUBLIC_URL. */
+const DEFAULT_CUSTOMER_APP =
+  String(process.env.CUSTOMER_APP_PUBLIC_URL || '').trim() || 'https://hotel-demo-11dcb.web.app';
+
+const PAYNOW_RESULT_URL =
+  String(process.env.PAYNOW_RESULT_URL || '').trim() ||
+  `${DEFAULT_PUBLIC_PAYNOW_API.replace(/\/$/, '')}/paynow/result`;
+const PAYNOW_RETURN_URL =
+  String(process.env.PAYNOW_RETURN_URL || '').trim() ||
+  `${DEFAULT_CUSTOMER_APP.replace(/\/$/, '')}/order-confirmation`;
 
 const app = express();
 app.use(
@@ -113,11 +126,11 @@ app.post('/paynow/initiate', async (req, res) => {
   const resultUrl = PAYNOW_RESULT_URL;
   const returnUrl = PAYNOW_RETURN_URL;
 
-  if (!id || !key || !resultUrl || !returnUrl) {
+  if (!id || !key) {
     return res.status(500).json({
       ok: false,
       error:
-        'Missing env: PAYNOW_INTEGRATION_ID, PAYNOW_INTEGRATION_KEY, PAYNOW_RESULT_URL, PAYNOW_RETURN_URL',
+        'Missing Paynow credentials: set PAYNOW_INTEGRATION_ID and PAYNOW_INTEGRATION_KEY in Railway (or server/.env). They come from your Paynow merchant dashboard. Optional: PAYNOW_RETURN_URL, PAYNOW_RESULT_URL, CUSTOMER_APP_PUBLIC_URL, PUBLIC_PAYNOW_API_ORIGIN.',
     });
   }
 
