@@ -4,7 +4,7 @@ import { FMT_GBP as FMT } from '../lib/currency';
 import { deliveryFeeFromSettings, fetchShopDeliverySettings } from '../lib/shopDeliverySettings';
 import { saveShopCustomerOrder } from '../lib/shopCustomerOrderSave';
 import { writeShopOrderConfirmationState } from '../lib/shopOrderConfirmationSession';
-import { resolveShopPaynowLocalInitiateUrl } from '../lib/shopPaynowLocal';
+import { postLocalPaynowInitiate, resolveShopPaynowLocalInitiateUrl } from '../lib/shopPaynowLocal';
 import {
   isStripePaymentsConfigured,
   setStripeHostedReturnContext,
@@ -173,66 +173,29 @@ export default function ShopCheckoutPage() {
     }
 
     if (shopPaynow.available && paymentMethod === 'paynow') {
-      try {
-        const r = await fetch(shopPaynow.localInitiateUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(paynowBody),
-        });
-        let payData = await r.json().catch(() => ({}));
-        if (!r.ok && payData && typeof payData === 'object' && !payData.error && !payData.ok) {
-          payData = { ...payData, error: `HTTP ${r.status}` };
-        } else if (!r.ok && (!payData || typeof payData !== 'object')) {
-          payData = {
-            ok: false,
-            error: `Local Paynow server returned ${r.status}. Run \`cd server && npm start\` (default port 4000).`,
-          };
-        }
-
-        if (payData?.ok === false || !payData?.redirectUrl) {
-          const fromBody = [
-            payData?.details?.message,
-            payData?.details?.hint,
-            payData?.details?.error,
-            payData?.details?.status,
-            payData?.error,
-          ]
-            .filter(Boolean)
-            .join(' ');
-          setError(
-            fromBody ||
-              'Could not start Paynow. Check `server/.env` (Paynow keys + URLs) and that the local API is running.',
-          );
-          setSubmitting(false);
-          return;
-        }
-        clearCart();
-        writeShopOrderConfirmationState({
-          source: 'shop',
-          orderId: data.order_number,
-          shopOrderDbId: data.id,
-          customer,
-          priceNum: grandTotal,
-          priceLabel: FMT.format(grandTotal),
-          from: 'Shop partners',
-          to: addr,
-          deliveryTitle: 'Shop delivery',
-          eta: '30–45 mins',
-          placedAt: data.placed_at || new Date().toISOString(),
-          package: { type: 'Shop order', size: `${itemCount} item${itemCount === 1 ? '' : 's'}` },
-        });
-        window.location.href = payData.redirectUrl;
-        return;
-      } catch (payErr) {
-        const msg = payErr?.message || String(payErr || '');
-        const netHint =
-          /Failed to fetch|NetworkError|fetch/i.test(msg) || String(payErr?.cause?.message || '').includes('fetch')
-            ? ' Start the local API: `cd server && npm start`, and set `REACT_APP_SHOP_PAYNOW_LOCAL_URL` in `.env.local`. Restart CRA after env changes.'
-            : '';
-        setError((payErr?.message || 'Could not start Paynow.') + netHint);
+      const payRes = await postLocalPaynowInitiate(paynowBody);
+      if (!payRes.ok || !payRes.redirectUrl) {
+        setError(payRes.error || 'Could not start Paynow.');
         setSubmitting(false);
         return;
       }
+      clearCart();
+      writeShopOrderConfirmationState({
+        source: 'shop',
+        orderId: data.order_number,
+        shopOrderDbId: data.id,
+        customer,
+        priceNum: grandTotal,
+        priceLabel: FMT.format(grandTotal),
+        from: 'Shop partners',
+        to: addr,
+        deliveryTitle: 'Shop delivery',
+        eta: '30–45 mins',
+        placedAt: data.placed_at || new Date().toISOString(),
+        package: { type: 'Shop order', size: `${itemCount} item${itemCount === 1 ? '' : 's'}` },
+      });
+      window.location.href = payRes.redirectUrl;
+      return;
     }
 
     setSubmitting(false);

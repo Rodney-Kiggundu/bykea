@@ -10,7 +10,15 @@ const PAYNOW_RESULT_URL = process.env.PAYNOW_RESULT_URL || '';
 const PAYNOW_RETURN_URL = process.env.PAYNOW_RETURN_URL || '';
 
 const app = express();
-app.use(cors({ origin: true }));
+app.use(
+  cors({
+    origin: true,
+    credentials: false,
+    methods: ['GET', 'HEAD', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    maxAge: 86_400,
+  }),
+);
 
 /** Confirms this host is the Paynow API (not the React app) when opened in a browser */
 app.get('/', (_req, res) => {
