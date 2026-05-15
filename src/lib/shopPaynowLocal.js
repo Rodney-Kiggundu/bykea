@@ -1,8 +1,18 @@
 /** Live Paynow API (Railway). Override with `REACT_APP_SHOP_PAYNOW_LOCAL_URL` if you deploy elsewhere. */
 export const DEFAULT_SHOP_PAYNOW_ORIGIN = 'https://bykea-production.up.railway.app';
 
+function isLocalLoopbackPaynowUrl(raw) {
+  return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(String(raw || '').trim());
+}
+
+/**
+ * Paynow calls always go to Railway by default. Values like `http://localhost:4000` in `.env.local`
+ * are ignored so a stale local URL does not break checkout; set a non-loopback URL to override.
+ */
 function effectivePaynowOriginRaw() {
-  return String(process.env.REACT_APP_SHOP_PAYNOW_LOCAL_URL || '').trim() || DEFAULT_SHOP_PAYNOW_ORIGIN;
+  const fromEnv = String(process.env.REACT_APP_SHOP_PAYNOW_LOCAL_URL || '').trim();
+  if (!fromEnv || isLocalLoopbackPaynowUrl(fromEnv)) return DEFAULT_SHOP_PAYNOW_ORIGIN;
+  return fromEnv;
 }
 
 /** `http://localhost:4000`, full `…/paynow/initiate`, or Railway origin — Paynow Node API (repo `server/`). */
@@ -21,13 +31,7 @@ export function resolveShopPaynowLocalBaseUrl() {
 
 function paynowNetworkFailureHint() {
   const base = resolveShopPaynowLocalBaseUrl();
-  if (!base) {
-    return ' Set REACT_APP_SHOP_PAYNOW_LOCAL_URL in `.env.development` / `.env.production` or `.env.local`, then restart `npm start` (or run a fresh `npm run build`).';
-  }
-  if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/?$/i.test(base)) {
-    return ' Start the Paynow API (`cd server && npm start`) or change REACT_APP_SHOP_PAYNOW_LOCAL_URL to your live API (e.g. Railway HTTPS URL).';
-  }
-  return ` Open ${base}/health in a browser; confirm Railway is running the Paynow Docker service (not the React app). If you still have REACT_APP_SHOP_PAYNOW_LOCAL_URL=http://localhost:4000 in .env.local, remove or update it so it does not override .env.development.`;
+  return ` Confirm ${base}/health in your browser. If it loads, open DevTools → Network for the /paynow/initiate request. On Railway set PAYNOW_INTEGRATION_ID, PAYNOW_INTEGRATION_KEY, PAYNOW_RESULT_URL, PAYNOW_RETURN_URL.`;
 }
 
 /**
