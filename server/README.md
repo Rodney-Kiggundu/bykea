@@ -99,6 +99,8 @@ That means the service is building the **repo root** (Create React App), not thi
 4. Remove any root-level **Build** that runs `react-scripts build` or serves `build/` for this service. This service should only run **`node index.js`** via `npm start` from **`server/`**.
 5. Redeploy. Visiting your Railway URL in a browser should show **JSON** from `GET /` (Paynow API metadata) or **`GET /health`**, not the React SPA.
 
+6. **If Root Directory is easy to miss:** this repo includes a **root `Dockerfile`** that only copies **`server/`** into the image. After you push, Railway should log **“Using detected Dockerfile!”** and stop building the Create React App at the monorepo root. If the dashboard still uses Nixpacks, open **Settings → Build** and set the builder to **Dockerfile** (or add variable **`RAILWAY_DOCKERFILE_PATH=Dockerfile`**), then redeploy.
+
 Host the **customer React app** on Firebase Hosting, Netlify, Vercel, etc., and set **`REACT_APP_SHOP_PAYNOW_LOCAL_URL`** there to your Railway origin, e.g. `https://bykea-production.up.railway.app` (no trailing slash required).
 
 ### 3. Environment variables (Railway → Variables)

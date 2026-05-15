@@ -1,0 +1,8 @@
+# Shrink build context — only server/ is copied in the Dockerfile
+**/node_modules
+build
+.git
+.cursor
+*.tgz
+package
+supabase
