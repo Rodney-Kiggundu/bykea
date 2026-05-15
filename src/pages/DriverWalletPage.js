@@ -281,7 +281,7 @@ export default function DriverWalletPage() {
     const usePaynow = depositPayMethod === 'paynow';
     if (usePaynow && !paynowAvailable) {
       setDepositErr(
-        'Paynow is not configured. Set REACT_APP_SHOP_PAYNOW_LOCAL_URL in .env.local, run `cd server && npm start` with Paynow env vars, then restart the app.',
+        'Paynow is not configured. Default API: https://bykea-production.up.railway.app — or set REACT_APP_SHOP_PAYNOW_LOCAL_URL in .env.local. For local Paynow run `cd server && npm start` with Paynow env vars, then restart the app.',
       );
       return;
     }

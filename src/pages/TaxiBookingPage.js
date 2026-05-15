@@ -471,7 +471,7 @@ export default function TaxiBookingPage({ variant = 'full' } = {}) {
     const useStripeFirst = paymentMethod === 'stripe' && showRideStripe;
     if (paymentMethod === 'card' && !showRidePaynow) {
       setBookError(
-        'Paynow is not configured. Set REACT_APP_SHOP_PAYNOW_LOCAL_URL in .env.local, run `cd server && npm start`, then restart the app — or choose another payment method.',
+        'Paynow is not configured. The app uses https://bykea-production.up.railway.app by default, or set REACT_APP_SHOP_PAYNOW_LOCAL_URL in .env.local. For local Paynow run `cd server && npm start`, then restart the app — or choose another payment method.',
       );
       return;
     }

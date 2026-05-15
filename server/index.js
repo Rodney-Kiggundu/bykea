@@ -25,7 +25,8 @@ app.get('/', (_req, res) => {
   res.status(200).type('application/json').send({
     ok: true,
     service: 'ingo-paynow-local',
-    hint: 'Shop/taxi Paynow flows POST to /paynow/initiate. The customer app should be hosted separately; set REACT_APP_SHOP_PAYNOW_LOCAL_URL to this origin.',
+    hint:
+      'Shop/taxi Paynow flows POST to /paynow/initiate. Default CRA origin: https://bykea-production.up.railway.app (override with REACT_APP_SHOP_PAYNOW_LOCAL_URL).',
     endpoints: ['GET /health', 'POST /paynow/initiate', 'POST /paynow/relay-initiate', 'POST /paynow/result'],
   });
 });

@@ -16,7 +16,7 @@ On Windows PowerShell: `copy .env.example .env`
 
 2. Edit **`server/.env`**: fill `PAYNOW_INTEGRATION_ID`, `PAYNOW_INTEGRATION_KEY`, and URLs (see below).
 
-3. **Frontend** — in repo root `.env.local` set **`REACT_APP_SHOP_PAYNOW_LOCAL_URL=http://localhost:4000`** (see `env.local.example`). Shop checkout calls **`POST /paynow/initiate`** on this server only; it does **not** call Supabase Edge `paynow-initiate`.
+3. **Frontend** — production uses **`https://bykea-production.up.railway.app`** by default (`REACT_APP_SHOP_PAYNOW_LOCAL_URL` in `.env.production` / code fallback). For local Paynow only, set **`REACT_APP_SHOP_PAYNOW_LOCAL_URL=http://localhost:4000`** in `.env.local` (see `env.local.example`). Shop checkout calls **`POST /paynow/initiate`** on this server only; it does **not** call Supabase Edge `paynow-initiate`.
 
 ## Run backend (from repo root)
 
@@ -124,7 +124,7 @@ After the first deploy, copy the **public Railway URL** (no trailing slash requi
 In your **hosted** frontend env (Netlify, Vercel, `.env.production`, etc.):
 
 ```bash
-REACT_APP_SHOP_PAYNOW_LOCAL_URL=https://your-service.up.railway.app
+REACT_APP_SHOP_PAYNOW_LOCAL_URL=https://bykea-production.up.railway.app
 ```
 
 Rebuild/redeploy the frontend. Locally, `.env.local` can use the same URL to test against production Paynow.

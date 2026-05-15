@@ -352,7 +352,7 @@ export default function PriceEstimatePage() {
       return;
     }
     if (!paynowConfigured) {
-      setCheckoutError('Paynow needs REACT_APP_SHOP_PAYNOW_LOCAL_URL and the local server, or choose card.');
+      setCheckoutError('Paynow needs the API at https://bykea-production.up.railway.app (or set REACT_APP_SHOP_PAYNOW_LOCAL_URL), or choose card.');
       return;
     }
 

@@ -1,7 +1,13 @@
-/** `http://localhost:4000` or full `…/paynow/initiate` — Paynow Node API (repo `server/`, e.g. Railway). */
+/** Live Paynow API (Railway). Override with `REACT_APP_SHOP_PAYNOW_LOCAL_URL` if you deploy elsewhere. */
+export const DEFAULT_SHOP_PAYNOW_ORIGIN = 'https://bykea-production.up.railway.app';
+
+function effectivePaynowOriginRaw() {
+  return String(process.env.REACT_APP_SHOP_PAYNOW_LOCAL_URL || '').trim() || DEFAULT_SHOP_PAYNOW_ORIGIN;
+}
+
+/** `http://localhost:4000`, full `…/paynow/initiate`, or Railway origin — Paynow Node API (repo `server/`). */
 export function resolveShopPaynowLocalInitiateUrl() {
-  const raw = String(process.env.REACT_APP_SHOP_PAYNOW_LOCAL_URL || '').trim();
-  if (!raw) return '';
+  const raw = effectivePaynowOriginRaw();
   const noTrail = raw.replace(/\/$/, '');
   if (/\/paynow\/initiate$/i.test(noTrail)) return noTrail;
   return `${noTrail}/paynow/initiate`;
@@ -9,8 +15,7 @@ export function resolveShopPaynowLocalInitiateUrl() {
 
 /** Base origin only (no `/paynow/initiate`), for diagnostics. */
 export function resolveShopPaynowLocalBaseUrl() {
-  const raw = String(process.env.REACT_APP_SHOP_PAYNOW_LOCAL_URL || '').trim().replace(/\/$/, '');
-  if (!raw) return '';
+  const raw = effectivePaynowOriginRaw().replace(/\/$/, '');
   return raw.replace(/\/paynow\/initiate$/i, '');
 }
 
@@ -31,9 +36,6 @@ function paynowNetworkFailureHint() {
  */
 export async function postLocalPaynowInitiate(body) {
   const url = resolveShopPaynowLocalInitiateUrl();
-  if (!url) {
-    return { ok: false, error: 'Paynow is not configured (set REACT_APP_SHOP_PAYNOW_LOCAL_URL).' };
-  }
   try {
     const r = await fetch(url, {
       method: 'POST',
